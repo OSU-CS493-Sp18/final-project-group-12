@@ -16,6 +16,11 @@ const distributorSchema = {
 
 
 // GET /distributors
+function getDistributors() {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.get('/', function(req, res) {
 
     res.status(200).send("GET distributors");
@@ -23,20 +28,35 @@ router.get('/', function(req, res) {
 
 
 // GET /distributors/{id}
+function getDistributor(id) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.get('/:id', function(req, res) {
 
-    res.status(200).send("GET distributors/:id");
+    res.status(200).send("GET distributors/" + req.params.id);
 });
 
 
 // GET /distributors/{id}/beers
+function getDistributorBeers(id) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.get('/:id/beers', function(req, res) {
 
-    res.status(200).send("GET distributors/:id/beers");
+    res.status(200).send("GET distributors/" + req.params.id + "/beers");
 });
 
 
 // POST /distributors
+function insertDistributor(distributor) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.post('/', function(req, res) {
 
     res.status(200).send("POST distributors");
@@ -44,16 +64,26 @@ router.post('/', function(req, res) {
 
 
 // PATCH /distributors/{id}
+function patchDistributor(id, distributor) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.patch('/:id', function(req, res) {
 
-    res.status(200).send("PATCH distributors/:id");
+    res.status(200).send("PATCH distributors/" + req.params.id);
 });
 
 
 // DELETE /distributors/{id}
+function deleteDistributor(id) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.delete('/:id', function(req, res) {
 
-    res.status(200).send("DELETE distributors/:id");
+    res.status(200).send("DELETE distributors/" + req.params.id);
 });
 
 

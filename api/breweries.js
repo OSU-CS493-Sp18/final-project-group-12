@@ -15,6 +15,11 @@ const brewerySchema = {
 
 
 // GET /breweries
+function getBreweries() {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.get('/', function(req, res) {
 
     res.status(200).send("GET breweries");
@@ -22,20 +27,35 @@ router.get('/', function(req, res) {
 
 
 // GET /breweries/{id}
+function getBrewery(id) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.get('/:id', function(req, res) {
 
-    res.status(200).send("GET breweries/:id");
+    res.status(200).send("GET breweries/" + req.params.id);
 });
 
 
 // GET /breweries/{id}/beers
+function getBreweryBeers(id) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.get('/:id/beers', function(req, res) {
 
-    res.status(200).send("GET breweries/:id/beers");
+    res.status(200).send("GET breweries/" + req.params.id + "/beers");
 });
 
 
 // POST /breweries
+function insertBrewery(brewery) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.post('/', function(req, res) {
 
     res.status(200).send("POST breweries");
@@ -43,16 +63,26 @@ router.post('/', function(req, res) {
 
 
 // PATCH /breweries/{id}
+function patchBrewery(id, brewery) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.patch('/:id', function(req, res) {
 
-    res.status(200).send("PATCH breweries/:id");
+    res.status(200).send("PATCH breweries/" + req.params.id);
 });
 
 
 // DELETE /breweries/{id}
+function deleteBrewery(id) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
 router.delete('/:id', function(req, res) {
 
-    res.status(200).send("DELETE breweries/:id");
+    res.status(200).send("DELETE breweries/" + req.params.id);
 });
 
 
