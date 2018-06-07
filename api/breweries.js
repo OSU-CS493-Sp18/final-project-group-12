@@ -14,36 +14,42 @@ const brewerySchema = {
 };
 
 
+// GET /breweries
 router.get('/', function(req, res) {
 
     res.status(200).send("GET breweries");
 });
 
 
+// GET /breweries/{id}
 router.get('/:id', function(req, res) {
 
     res.status(200).send("GET breweries/:id");
 });
 
 
+// GET /breweries/{id}/beers
 router.get('/:id/beers', function(req, res) {
 
     res.status(200).send("GET breweries/:id/beers");
 });
 
 
+// POST /breweries
 router.post('/', function(req, res) {
 
     res.status(200).send("POST breweries");
 });
 
 
+// PATCH /breweries/{id}
 router.patch('/:id', function(req, res) {
 
     res.status(200).send("PATCH breweries/:id");
 });
 
 
+// DELETE /breweries/{id}
 router.delete('/:id', function(req, res) {
 
     res.status(200).send("DELETE breweries/:id");

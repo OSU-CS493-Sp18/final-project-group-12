@@ -14,30 +14,35 @@ const beerSchema = {
 };
 
 
+// GET /beers
 router.get('/', function(req, res) {
 
     res.status(200).send("GET beers");
 });
 
 
+// GET /beers/{id}
 router.get('/:id', function(req, res) {
 
     res.status(200).send("GET beers/:id");
 });
 
 
+// POST /beers
 router.post('/', function(req, res) {
 
     res.status(200).send("POST beers");
 });
 
 
+// PATCH /beers/{id}
 router.patch('/:id', function(req, res) {
 
     res.status(200).send("PATCH beers/:id");
 });
 
 
+// DELETE /beers/{id}
 router.delete('/:id', function(req, res) {
 
     res.status(200).send("DELETE beers/:id");
