@@ -1,0 +1,78 @@
+{
+    "beers":[
+        {
+            "name": "Deschutes River Ale",
+            "style":"Hybrid/mixed Beer",
+            "abv":3.9,
+            "ibu":28,
+            "description": "Here’s a session ale that’s clean and refreshing enough for the long haul, but fully graced with hop aroma, malt poise and clear craft passion.  Sit back, relax and let the subtle pleasures reveal.",
+            "image":"https://s3.amazonaws.com/brewerydbapi/beer/So05N1/upload_2KrnoD-large.png",
+            "brewerid":1   
+        },
+        {
+            "name": "The Abyss Barrel Aged Scotch",
+            "style":"American Imperial Stout",
+            "abv": "12.3",
+            "ibu": "42",
+            "description": "Complex earthy, smoky, and oak notes play against a refined, yet boozy, mix of sweet and bitterness.",
+            "brewerid":1   
+        },
+        {
+            "name": "Fresh Squeezed IPA",
+            "style": "American IPA",
+            "abv": "6.4",
+            "ibu": "60",
+            "description": "This mouthwateringly delicious IPA gets its flavor from a heavy helping of citra and mosaic hops. Don't worry, no fruit was harmed in the making of this beer.",
+            "image":"https://s3.amazonaws.com/brewerydbapi/beer/NKIjJb/upload_RThmwE-large.png",
+            "brewerid":1
+        },
+        {
+            "name": "Total Domination IPA",
+            "style":"American IPA",
+            "abv": "6.7",
+            "ibu": "65",
+            "description": "Multiple hops collide in balanced perfection, dominating the senses, achieving total satisfaction. From the Pacific Northwest, birthplace of the modern IPA, comes a beer whose name says it all.\r\n\r\nTotal Domination has a citrusy, floral hop aroma, and big hop flavor balanced with a richness imparted by Carahell and Munich malts. This beer is a big flavorful Northwest IPA that maintains its drinkability, and as such has garnered great admiration from the novice craft drinker and the seasoned hop head alike.",
+            "image":"https://s3.amazonaws.com/brewerydbapi/beer/infeFI/upload_taTKTO-large.png",
+            "brewerid":2
+        },
+        {
+            "name": "Wünderbier",
+            "style":"German-Style Kölsch",
+            "abv": "4.4",
+            "ibu":22,
+            "description": "Conquer summer with Wünderbier in-hand and say “cheers” to the pure and unadulterated fun of the season. In tribute to the favored beer of Cologne (Köln), Germany, this German-Style Kölsch is golden-colored with a subtle, crisp sweetness. A wonderful summer story awaits in every sip; it’s Wünderbier!",
+            "image":"https://s3.amazonaws.com/brewerydbapi/beer/oBNJj9/upload_ZNCJqv-large.png",
+            "brewerid":2
+        },
+        {
+            "name": "Vanilla Oatis",
+            "style":"Oatmeal Stout",
+            "abv": "7",
+            "ibu": "50",  
+            "description": "A delicious Oatmeal Stout with just enough hops to balance the copious quantities of dark roasted malts, oatmeal for a creamy smooth drinkability, and whole vanilla beans for a rich complexity.",
+            "image":"https://s3.amazonaws.com/brewerydbapi/beer/UNns8H/upload_Kpntup-large.png",
+            "brewerid":2
+        }
+    ],
+
+    "breweries":[
+        {
+            "id":1,
+            "name":"Deschutes Brewery",
+            "address":"1044 NW Bond Street",
+            "city":"Bend",
+            "state":"OR",
+            "zip":97703,
+            "phone":"541-382-9242"
+        },
+        {
+            "id":2,
+            "name":"Ninkasi Brewery",
+            "address":"272 Van Buren Street",
+            "city":"Eugene",
+            "state":"OR",
+            "zip":97402,
+            "phone":"541-344-2739"
+        }
+    ]
+}
