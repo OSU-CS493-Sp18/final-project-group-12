@@ -15,6 +15,14 @@ const distributorSchema = {
 };
 
 
+// Users
+function getDistributionsByUserId(userId) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
+
+
 // GET /distributors
 function getDistributors() {
     return new Promise((resolve, reject) => {

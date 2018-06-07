@@ -39,7 +39,7 @@ CREATE TABLE distributors(
     address VARCHAR(255) NOT NULL,
     state VARCHAR(255) NOT NULL,
     zip INT NOT NULL,
-    owner VARCHAR(255) NOT NULL,
+    ownerid CHAR(24) NOT NULL,
 
 
     PRIMARY KEY (id)
