@@ -31,7 +31,7 @@
             "style":"American IPA",
             "abv": "6.7",
             "ibu": "65",
-            "description": "Multiple hops collide in balanced perfection, dominating the senses, achieving total satisfaction. From the Pacific Northwest, birthplace of the modern IPA, comes a beer whose name says it all.\r\n\r\nTotal Domination has a citrusy, floral hop aroma, and big hop flavor balanced with a richness imparted by Carahell and Munich malts. This beer is a big flavorful Northwest IPA that maintains its drinkability, and as such has garnered great admiration from the novice craft drinker and the seasoned hop head alike.",
+            "description": "Multiple hops collide in balanced perfection, dominating the senses, achieving total satisfaction. From the Pacific Northwest, birthplace of the modern IPA, comes a beer whose name says it all.",
             "image":"https://s3.amazonaws.com/brewerydbapi/beer/infeFI/upload_taTKTO-large.png",
             "brewerid":2
         },
@@ -39,7 +39,7 @@
             "name": "Wünderbier",
             "style":"German-Style Kölsch",
             "abv": "4.4",
-            "ibu":22,
+            "ibu":"22",
             "description": "Conquer summer with Wünderbier in-hand and say “cheers” to the pure and unadulterated fun of the season. In tribute to the favored beer of Cologne (Köln), Germany, this German-Style Kölsch is golden-colored with a subtle, crisp sweetness. A wonderful summer story awaits in every sip; it’s Wünderbier!",
             "image":"https://s3.amazonaws.com/brewerydbapi/beer/oBNJj9/upload_ZNCJqv-large.png",
             "brewerid":2
@@ -52,7 +52,25 @@
             "description": "A delicious Oatmeal Stout with just enough hops to balance the copious quantities of dark roasted malts, oatmeal for a creamy smooth drinkability, and whole vanilla beans for a rich complexity.",
             "image":"https://s3.amazonaws.com/brewerydbapi/beer/UNns8H/upload_Kpntup-large.png",
             "brewerid":2
+        },
+        {
+            "name":"Sticky Hands",
+            "style":"Imperial IPA",
+            "abv": "8.1",
+            "ibu":"100",
+            "description":"Meet Sticky Hands. Offering a luscious blend of flavor and drinkability, this Hop Experience Ale features ample additions of sticky, lupulin-packed hops, grown in the Pacific Northwest. The result is an aromatic blast of citrus, tropical fruit, and dank herb that transitions into resinous hop flavor and a delightfully balanced finish.",
+            "image":"https://s3.amazonaws.com/brewerydbapi/brewery/A7Nqfu/upload_XduCQg-large.png",
+            "brewerid":3
+        },
+        {
+            "name":"Block Party",
+            "style":"Amber Ale",
+            "abv": "5.6",
+            "ibu":"10",
+            "description":"The amber you’ve always wanted. Crisp and clean, but full of flavor: milk caramel, toasted biscuit, and sweet wheat. A medium-bodied brew that has character yet remains an all-game drinker that always satisfies, never disappoints, and plays well with many types of food.",            "image":"https://s3.amazonaws.com/brewerydbapi/brewery/A7Nqfu/upload_XduCQg-large.png",
+            "brewerid":3
         }
+
     ],
 
     "breweries":[
@@ -73,6 +91,15 @@
             "state":"OR",
             "zip":97402,
             "phone":"541-344-2739"
+        },
+        {
+            "id":3,
+            "name":"Block 15 Brewering Company",
+            "address":"3415 SW Deschutes St",
+            "city":"Corvallis",
+            "state":"OR",
+            "zip":97333,
+            "phone":"541-752-2337"
         }
     ]
 }
