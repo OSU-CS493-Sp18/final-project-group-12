@@ -4,7 +4,7 @@ const validation = require('../lib/validation');
 const mysql = require('mysql');
 const app = express();
 
-/*const mysqlHost = process.env.MYSQL_HOST;
+const mysqlHost = process.env.MYSQL_HOST;
 const mysqlPort = process.env.MYSQL_PORT || '3306';
 const mysqlDBName = process.env.MYSQL_DATABASE;
 const mysqlUser = process.env.MYSQL_USER;
@@ -18,7 +18,7 @@ const mysqlPool = mysql.createPool({
     database: mysqlDBName,
     user: mysqlUser,
     password: mysqlPassword
-}); */
+});
 
 /*
  * Schema describing required/optional fields of a beer object.
