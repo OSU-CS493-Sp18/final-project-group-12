@@ -102,16 +102,85 @@ router.get('/', function(req, res) {
         });
 });
 
-
 // GET /beers/{id}
-function getBeer(id) {
+function getBeerByID(beerID) {
     return new Promise((resolve, reject) => {
-
+        mysqlPool.query(
+            'SELECT * FROM beer WHERE id = ?',
+            [beerID],
+            function (err, results) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
+                }
+            }
+        )
     });
 }
-router.get('/:id', function(req, res) {
 
-    res.status(200).send("GET beers/" + req.params.id);
+function getBreweryFromBeerID(beerID) {
+    return new Promise((resolve, reject) => {
+        mysqlPool.query(
+            'SELECT * FROM breweries WHERE id = (SELECT brewerid FROM beer WHERE id = ?)',
+            [beerID],
+            function(err, results) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
+                }
+            }
+        )
+    });
+}
+
+function getDistributorFromBeerID(beerID) {
+    return new Promise((resolve, reject) => {
+        mysqlPool.query(
+            'SELECT * FROM distributors WHERE id = (SELECT distributorid FROM beerDistributors WHERE beerid = ?)',
+            [beerID],
+            function(err, results) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
+                }
+            }
+        )
+    });
+}
+
+router.get('/:beerID', function(req, res) {
+    var BeerObj;
+    const beerID = parseInt(req.params.beerID);
+    getBeerByID(beerID)
+        .then((beer) => {
+            if(beer) {
+                BeerObj = beer;
+                return getBreweryFromBeerID(beerID);
+            } else {
+                next();
+            }
+        })
+        .then ((brewery) => {
+            if(brewery) {
+                BeerObj.brewery = brewery;
+                return getDistributorFromBeerID(beerID);
+            }
+        })
+        .then ((distributor) => {
+            if(distributor) {
+                BeerObj.distributor = distributor;
+            }
+            res.status(200).json(BeerObj);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+                error: "Error getting beer info"
+            });
+        });
 });
 
 
