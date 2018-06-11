@@ -209,15 +209,38 @@ router.patch('/:id', function(req, res) {
 
 
 // DELETE /beers/{id}
-function deleteBeer(id) {
+function deleteBeerByID(beerID) {
     return new Promise((resolve, reject) => {
-
+        mysqlPool.query(
+            'DELETE FROM beer WHERE id = ? ',
+            [beerID],
+            function (err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.affectedRows > 0);
+                }
+            }
+        );
     });
 }
-router.delete('/:id', function(req, res) {
 
-    res.status(200).send("DELETE beers/" + req.params.id);
+router.delete('/:beerID', function (req, res, next) {
+    const beerID = parseInt(req.params.beerID);
+    deleteBeerByID(beerID)
+        .then((deleteSuccessful) => {
+            if (deleteSuccessful) {
+                res.status(204).end();
+                console.log('Deleted the beer entry');
+            } else {
+                next();
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                error: "Cannot delete beer entry "
+            });
+        });
 });
-
 
 exports.router = router;
