@@ -25,7 +25,7 @@ CREATE TABLE beer(
     abv FLOAT NULL,
     ibu FLOAT NULL,
     description TEXT NULL,
-    image LONGBLOB NULL,
+    image VARCHAR(255) NULL,
     brewerid INT NOT NULL,
 
     FOREIGN KEY (brewerid) REFERENCES breweries(id)
