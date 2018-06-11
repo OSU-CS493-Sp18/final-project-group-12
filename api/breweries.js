@@ -1,6 +1,24 @@
 const router = require('express').Router();
+const express = require('express');
 const validation = require('../lib/validation');
+const mysql = require('mysql');
+const app = express();
 
+const mysqlHost = process.env.MYSQL_HOST;
+const mysqlPort = process.env.MYSQL_PORT || '3306';
+const mysqlDBName = process.env.MYSQL_DATABASE;
+const mysqlUser = process.env.MYSQL_USER;
+const mysqlPassword = process.env.MYSQL_PASSWORD;
+
+const maxMySQLConnections = 10;
+const mysqlPool = mysql.createPool({
+    connectionLimit: maxMySQLConnections,
+    host: mysqlHost,
+    port: mysqlPort,
+    database: mysqlDBName,
+    user: mysqlUser,
+    password: mysqlPassword
+});
 /*
  * Schema describing required/optional fields of a brewery object.
  */
