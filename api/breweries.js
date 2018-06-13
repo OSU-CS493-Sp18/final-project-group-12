@@ -244,31 +244,30 @@ function patchBrewery(id, brewery) {
           }
       );
   });
-  }
 }
 router.patch('/:id', function(req, res) {
-  const id = parseInt(req.params.id);
-  console.log('made it here with object' + JSON.stringify(req.body));
-  if(req.body && validation.validateAgainstSchema(req.body, brewerySchema)) {
-      patchBrewery(id, req.body)
-      .then((id) => {
-          res.status(201).json({
-              id: id,
-              links: {
-                  brewery: '/breweries/' + id
-              }
-          });
-      })
-      .catch((err) => {
-          res.status(500).json({
-              error: "Error patching brewery object"
-          });
-      });
-  } else {
-      res.status(400).json({
-          error: "Incorrect JSON body"
-      });
-  }
+    const id = parseInt(req.params.id);
+    console.log('made it here with object' + JSON.stringify(req.body));
+    if(req.body && validation.validateAgainstSchema(req.body, brewerySchema)) {
+        patchBrewery(id, req.body)
+        .then((id) => {
+            res.status(201).json({
+                id: id,
+                links: {
+                    brewery: '/breweries/' + id
+                }
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                error: "Error patching brewery object"
+            });
+        });
+    } else {
+        res.status(400).json({
+            error: "Incorrect JSON body"
+        });
+    }
 });
 
 
