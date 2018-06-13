@@ -1,10 +1,6 @@
 const router = require('express').Router();
-const express = require('express');
 const validation = require('../lib/validation');
 var mysqlPool = require('./db').mysqlPool;
-const bodyParser = require('body-parser');
-const app = express();
-app.use(bodyParser.json());
 
 
 /*

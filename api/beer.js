@@ -1,9 +1,6 @@
 const router = require('express').Router();
-const express = require('express');
 const validation = require('../lib/validation');
 var mysqlPool = require('./db').mysqlPool;
-
-const bodyParser = require('body-parser');
 
 
 /*
@@ -16,6 +13,7 @@ const beerSchema = {
     ibu: { required: true },
     description: { required: true },
     image: { required: true },
+    brewerid: { required: true }
 };
 
 function getBeerCount() {
@@ -142,15 +140,15 @@ router.get('/:beerID', function(req, res) {
             if (beer) {
                 BeerObj = beer;
                 return getBreweryFromBeerID(beerID);
-            } else {
-                next();
             }
+            return Promise.reject("Beer not found with id " + beerID);
         })
         .then((brewery) => {
             if (brewery) {
                 BeerObj.brewery = brewery;
                 return getDistributorFromBeerID(beerID);
             }
+            return Promise.reject("Brewery for beer not found");
         })
         .then((distributor) => {
             if (distributor) {
@@ -159,7 +157,6 @@ router.get('/:beerID', function(req, res) {
             res.status(200).json(BeerObj);
         })
         .catch((err) => {
-            console.log(err);
             res.status(500).json({
                 error: "Error getting beer info: " + err
             });
@@ -169,10 +166,9 @@ router.get('/:beerID', function(req, res) {
 
 // POST /beers
 function insertBeer(beer) {
-    console.log('made it here with object' + JSON.stringify(beer));
     return new Promise((resolve, reject) => {
         mysqlPool.query(
-            'INSERT INTO beer (name, style, abv, ibu, description, image, brewerid) VALUES (?,?,?,?,?,?,?)', [beer.name, beer.style, beer.abv, beer.ibu, beer.description, beer.image, beer.brewerid],
+            'INSERT INTO beer SET ?', [beer],
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -185,7 +181,7 @@ function insertBeer(beer) {
 }
 
 router.post('/', function(req, res, next) {
-    if (req.body && req.body.name && req.body.style && req.body.abv && req.body.ibu && req.body.brewerid) {
+    if (validation.validateAgainstSchema(req.body, beerSchema)) {
         insertBeer(req.body)
             .then((id) => {
                 res.status(201).json({
@@ -210,7 +206,6 @@ router.post('/', function(req, res, next) {
 
 // PATCH /beers/{id}
 function updateBeer(beerID, beer) {
-    console.log('made it here with object' + JSON.stringify(beer));
     return new Promise((resolve, reject) => {
         mysqlPool.query(
             'UPDATE beer SET ? WHERE id = ?', [beer, beerID],
@@ -227,8 +222,7 @@ function updateBeer(beerID, beer) {
 
 router.patch('/:beerID', function(req, res) {
     const beerID = parseInt(req.params.beerID);
-    console.log('made it here with object' + JSON.stringify(req.body));
-    if (req.body && (req.body.name || req.body.style || req.body.abv || req.body.ibu || req.body.description || req.body.image || req.body.brewerid)) {
+    if (req.body && beerID) {
         updateBeer(beerID, req.body)
             .then((id) => {
                 res.status(201).json({
@@ -273,7 +267,6 @@ router.delete('/:beerID', function(req, res, next) {
         .then((deleteSuccessful) => {
             if (deleteSuccessful) {
                 res.status(204).end();
-                console.log('Deleted the beer entry');
             } else {
                 next();
             }
@@ -284,5 +277,6 @@ router.delete('/:beerID', function(req, res, next) {
             });
         });
 });
+
 
 exports.router = router;

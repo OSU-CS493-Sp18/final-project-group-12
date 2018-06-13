@@ -2,7 +2,6 @@ const router = require('express').Router();
 const express = require('express');
 const validation = require('../lib/validation');
 var mysqlPool = require('./db').mysqlPool;
-const app = express();
 
 
 /*

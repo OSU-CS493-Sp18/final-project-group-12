@@ -2,8 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const bearerToken = require('express-bearer-token');
-var db = require('./api/db');
 
+var db = require('./api/db');
 const api = require('./api');
 
 // Application
