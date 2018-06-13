@@ -215,7 +215,6 @@ function updateBeer(beerID, beer) {
                 if (err) {
                     reject(err);
                 } else {
-                    console.log(result);
                     if (result && result.affectedRows > 0) {
                         resolve(result);
                     } else {
@@ -231,10 +230,8 @@ router.patch('/:beerID', function(req, res, next) {
     const beerID = parseInt(req.params.beerID);
     if (req.body) {
         if (beerID) {
-            console.log("id:" + beerID);
             updateBeer(beerID, req.body)
                 .then((result) => {
-                    console.log("ResultId:" + result);
                     if (result) {
                         res.status(201).json({
                             id: beerID,

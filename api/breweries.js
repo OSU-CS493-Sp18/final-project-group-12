@@ -7,7 +7,6 @@ var mysqlPool = require('./db').mysqlPool;
  * Schema describing required/optional fields of a brewery object.
  */
 const brewerySchema = {
-    id: { required: false },
     name: { required: true },
     address: { required: false },
     city: { required: true },
@@ -209,7 +208,11 @@ function patchBrewery(id, brewery) {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result.insertId);
+                    if (result && result.affectedRows > 0) {
+                        resolve(result);
+                    } else {
+                        resolve(null);
+                    }
                 }
             }
         );
@@ -221,13 +224,18 @@ router.patch('/:id', function(req, res, next) {
     if (req.body) {
         if (breweryid) {
             patchBrewery(breweryid, req.body)
-                .then((id) => {
-                    res.status(201).json({
-                        id: breweryid,
-                        links: {
-                            brewery: '/breweries/' + id
-                        }
-                    });
+                .then((result) => {
+                    if (result) {
+                        res.status(201).json({
+                            id: breweryid,
+                            links: {
+                                beer: '/breweries/' + breweryid
+                            }
+                        });
+                    } else {
+                        next();
+                        return;
+                    }
                 })
                 .catch((err) => {
                     res.status(500).json({
@@ -236,6 +244,7 @@ router.patch('/:id', function(req, res, next) {
                 });
         } else {
             next();
+            return;
         }
     } else {
         res.status(400).json({
