@@ -40,6 +40,7 @@ CREATE TABLE distributors(
     address VARCHAR(255) NOT NULL,
     state VARCHAR(255) NOT NULL,
     zip INT NOT NULL,
+    phone VARCHAR(15) NOT NULL,
     ownerid CHAR(24) NOT NULL,
 
     PRIMARY KEY (id)
@@ -65,8 +66,8 @@ INSERT INTO beer(name,style,abv,ibu,description,image,brewerid) VALUES ('Vanilla
 INSERT INTO beer(name,style,abv,ibu,description,image,brewerid) VALUES ('Sticky Hands','Imperial IPA',8.1,100,'Meet Sticky Hands. Offering a luscious blend of flavor and drinkability, this Hop Experience Ale features ample additions of sticky, lupulin-packed hops, grown in the Pacific Northwest. The result is an aromatic blast of citrus, tropical fruit, and dank herb that transitions into resinous hop flavor and a delightfully balanced finish.','https://s3.amazonaws.com/brewerydbapi/brewery/A7Nqfu/upload_XduCQg-large.png',3);
 INSERT INTO beer(name,style,abv,ibu,description,image,brewerid) VALUES ('Block Party','Amber Ale',5.6,10,'The amber you’ve always wanted. Crisp and clean, but full of flavor: milk caramel, toasted biscuit, and sweet wheat. A medium-bodied brew that has character yet remains an all-game drinker that always satisfies, never disappoints, and plays well with many types of food.','https://s3.amazonaws.com/brewerydbapi/brewery/A7Nqfu/upload_XduCQg-large.png',3);
 
-INSERT INTO distributors(id, name, address, state, zip, ownerid) VALUES (1, 'Bombs Away Cafe', 'NW Monroe Ave','OR', 97330, 1);
-INSERT INTO distributors(id, name, address, state, zip, ownerid) VALUES (2, 'Suds & Suds', '342 Kings Ave','OR', 97330, 2);
-INSERT INTO distributors(id, name, address, state, zip, ownerid) VALUES (3, 'Market of Choice', 'NW 9th St','OR', 97330, 3);
+INSERT INTO distributors(id, name, address, state, zip, phone, ownerid) VALUES (1, 'Bombs Away Cafe', 'NW Monroe Ave','OR', 97330, "4929320193", 1);
+INSERT INTO distributors(id, name, address, state, zip, phone, ownerid) VALUES (2, 'Suds & Suds', '342 Kings Ave','OR', 97330, "4929320193", 2);
+INSERT INTO distributors(id, name, address, state, zip, phone, ownerid) VALUES (3, 'Market of Choice', 'NW 9th St','OR', 97330, "4929320193", 3);
 
 INSERT INTO beerDistributors (beerid, distributorid) VALUES (1, 1), (2, 2), (3, 3), (4, 1), (5, 2), (6, 3), (7, 1), (8, 2)

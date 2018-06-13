@@ -86,7 +86,6 @@ router.get('/', function(req, res) {
                 error: "Error getting breweries list:" + err
             });
         });
-
 });
 
 
@@ -102,7 +101,7 @@ function getBrewery(id) {
                     resolve(results[0]);
                 }
             }
-        )
+        );
     });
 }
 
@@ -136,7 +135,7 @@ function getBeerFromBreweryID(breweryID) {
                     resolve(results[0]);
                 }
             }
-        )
+        );
     });
 }
 
