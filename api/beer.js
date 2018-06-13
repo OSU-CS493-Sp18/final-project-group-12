@@ -233,8 +233,8 @@ function updateBeer(beerID, beer) {
     console.log('made it here with object' + JSON.stringify(beer));
     return new Promise((resolve, reject) => {
         mysqlPool.query(
-            'UPDATE beer SET name = ? , style = ?, abv = ?, ibu = ?, description = ?, image = ?, brewerid = ?',
-            [beer.name, beer.style, beer.abv, beer.ibu, beer.description, beer.image, beer.brewerid],
+            'UPDATE beer SET name = ? , style = ?, abv = ?, ibu = ?, description = ?, image = ?, brewerid = ? WHERE id = ?',
+            [beer.name, beer.style, beer.abv, beer.ibu, beer.description, beer.image, beer.brewerid, beerID],
             function(err, result) {
                 if(err) {
                     reject(err);
@@ -255,7 +255,7 @@ router.patch('/:beerID', function(req, res) {
             res.status(201).json({
                 id: id,
                 links: {
-                    beer: '/beer/' + id
+                    beer: '/beer/' + beerID
                 }
             });
         }) 
