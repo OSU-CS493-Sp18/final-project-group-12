@@ -1,13 +1,12 @@
 {
 	"info": {
+		"_postman_id": "48e8e5ec-9c05-4a2c-b839-29111debdaad",
 		"name": "cs493-final",
-		"_postman_id": "55d2ac56-d7e5-4be7-be34-be816c006092",
-		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "http://localhost:8000/beer",
+			"name": "Add New Beer",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -30,19 +29,21 @@
 					"path": [
 						"beer"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/beer/9",
+			"name": "Get Beer by ID",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://localhost:8000/beer/9",
+					"raw": "http://localhost:8000/beer/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -50,15 +51,14 @@
 					"port": "8000",
 					"path": [
 						"beer",
-						"9"
+						"5"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/beer/9",
+			"name": "Patch Beer by ID",
 			"request": {
 				"method": "PATCH",
 				"header": [
@@ -82,17 +82,19 @@
 						"beer",
 						"9"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/beer/",
+			"name": "Get All Beers",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://localhost:8000/beer/",
 					"protocol": "http",
@@ -104,17 +106,19 @@
 						"beer",
 						""
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/beer/9",
+			"name": "Delete Beer by ID",
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://localhost:8000/beer/9",
 					"protocol": "http",
@@ -126,13 +130,12 @@
 						"beer",
 						"9"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "POST /users/",
+			"name": "Register User",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -156,13 +159,12 @@
 						"users",
 						""
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/users/login",
+			"name": "Login User",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -186,13 +188,12 @@
 						"users",
 						"login"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "GET http://localhost:8000/users/zach",
+			"name": "Get User Info",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -226,17 +227,19 @@
 						"users",
 						"zach"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/breweries/",
+			"name": "Get All Breweries",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://localhost:8000/breweries/",
 					"protocol": "http",
@@ -248,13 +251,12 @@
 						"breweries",
 						""
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/breweries",
+			"name": "Add New Brewery",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -277,19 +279,21 @@
 					"path": [
 						"breweries"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/breweries/9",
+			"name": "Get Brewery by ID",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://localhost:8000/breweries/4",
+					"raw": "http://localhost:8000/breweries/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -297,15 +301,14 @@
 					"port": "8000",
 					"path": [
 						"breweries",
-						"4"
+						"3"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/breweries/4",
+			"name": "Patch Brewery by ID",
 			"request": {
 				"method": "PATCH",
 				"header": [
@@ -329,17 +332,19 @@
 						"breweries",
 						"4"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/breweries/4",
+			"name": "Delete Brewery by ID",
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://localhost:8000/breweries/4",
 					"protocol": "http",
@@ -351,17 +356,19 @@
 						"breweries",
 						"4"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/distributors/",
+			"name": "Get All Distributors",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://localhost:8000/distributors/",
 					"protocol": "http",
@@ -373,13 +380,12 @@
 						"distributors",
 						""
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/distributors",
+			"name": "Add New Distributor",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -402,19 +408,21 @@
 					"path": [
 						"distributors"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/distributors/9",
+			"name": "Get Distributor by ID",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://localhost:8000/distributors/4",
+					"raw": "http://localhost:8000/distributors/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -422,15 +430,14 @@
 					"port": "8000",
 					"path": [
 						"distributors",
-						"4"
+						"2"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/distributors/4",
+			"name": "Patch Distributor by ID",
 			"request": {
 				"method": "PATCH",
 				"header": [
@@ -454,17 +461,19 @@
 						"distributors",
 						"4"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/distributors/4",
+			"name": "Delete Distributor by ID",
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://localhost:8000/distributors/4",
 					"protocol": "http",
@@ -476,19 +485,21 @@
 						"distributors",
 						"4"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/distributors/4/beer",
+			"name": "Get Beer at Distributor",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://localhost:8000/distributors/4/beer",
+					"raw": "http://localhost:8000/distributors/2/beer",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -496,16 +507,15 @@
 					"port": "8000",
 					"path": [
 						"distributors",
-						"4",
+						"2",
 						"beer"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/distributors/4/beer",
+			"name": "Post Beer to Distributor",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -530,13 +540,12 @@
 						"4",
 						"beer"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/distributors/4/beer",
+			"name": "Delete Beer from Distributor",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -561,13 +570,12 @@
 						"4",
 						"beer"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8000/users/zach/distributors",
+			"name": "Get Distributors by User",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -581,7 +589,10 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://localhost:8000/users/zach/distributors",
 					"protocol": "http",
@@ -594,8 +605,7 @@
 						"zach",
 						"distributors"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		}
