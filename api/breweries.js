@@ -153,7 +153,7 @@ router.get('/:id', function(req, res) {
 function getBeerFromBreweryID(breweryID) {
     return new Promise((resolve, reject) => {
         mysqlPool.query(
-            'SELECT * FROM beer WHERE brewerid = (SELECT id FROM breweries WHERE brewerid = ?)',
+            'SELECT * FROM beer WHERE brewerid = ?',
             [breweryID],
             function(err, results) {
                 if(err) {
