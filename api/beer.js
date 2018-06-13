@@ -229,14 +229,46 @@ router.post('/', function(req, res, next) {
 
 
 // PATCH /beers/{id}
-function patchBeer(id, beer) {
+function updateBeer(beerID, beer) {
+    console.log('made it here with object' + JSON.stringify(beer));
     return new Promise((resolve, reject) => {
-
+        mysqlPool.query(
+            'UPDATE beer SET name = ? , style = ?, abv = ?, ibu = ?, description = ?, image = ?, brewerid = ?',
+            [beer.name, beer.style, beer.abv, beer.ibu, beer.description, beer.image, beer.brewerid],
+            function(err, result) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(result.insertId);
+                }
+            }
+        );
     });
 }
-router.patch('/:id', function(req, res) {
 
-    res.status(200).send("PATCH beers/" + req.params.id);
+router.patch('/:beerID', function(req, res) {
+    const beerID = parseInt(req.params.beerID);
+    console.log('made it here with object' + JSON.stringify(req.body));
+    if(req.body && (req.body.name || req.body.style || req.body.abv || req.body.ibu || req.body.description || req.body.image || req.body.brewerid)) {
+        updateBeer(beerID, req.body)
+        .then((id) => {
+            res.status(201).json({
+                id: id,
+                links: {
+                    beer: '/beer/' + id
+                }
+            });
+        }) 
+        .catch((err) => {
+            res.status(500).json({
+                error: "Error patching beer object"
+            });
+        });
+    } else {
+        res.status(400).json({
+            error: "Incorrect JSON body"
+        });
+    }
 });
 
 
