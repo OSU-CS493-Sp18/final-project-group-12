@@ -74,7 +74,7 @@ router.get('/', function(req, res) {
             } = breweriesInfo;
             if (pageNumber < totalPages) {
                 links.nextPage = '/breweries?page=' + (pageNumber + 1);
-                links.lastPage = 'breweries?page=' + totalPages;
+                links.lastPage = '/breweries?page=' + totalPages;
             }
             if (pageNumber > 1) {
                 links.prevPage = '/breweries?page=' + (pageNumber - 1);
@@ -107,20 +107,19 @@ function getBrewery(id) {
     });
 }
 
-router.get('/:id', function(req, res) {
-    const breweryid = parseInt(req.params.id);
-    getBrewery(breweryid)
+router.get('/:id', function(req, res, next) {
+    const breweryID = parseInt(req.params.id);
+
+    getBrewery(breweryID)
         .then((brewery) => {
             if (brewery) {
                 res.status(200).json(brewery);
-            } else {
-                next();
             }
+            next();
         })
         .catch((err) => {
-            console.log(err);
             res.status(500).json({
-                error: "Error getting beer info: " + err
+                error: "Error getting brewery info: " + err
             });
         });
 });
@@ -142,18 +141,17 @@ function getBeerFromBreweryID(breweryID) {
     });
 }
 
-router.get('/:id/beers', function(req, res) {
+router.get('/:id/beers', function(req, res, next) {
     const breweryid = parseInt(req.params.id);
+
     getBeerFromBreweryID(breweryid)
         .then((beer) => {
             if (beer) {
                 res.status(200).json(beer);
-            } else {
-                next();
             }
+            next();
         })
         .catch((err) => {
-            console.log(err);
             res.status(500).json({
                 error: "Error getting brewery info: " + err
             });
@@ -163,12 +161,10 @@ router.get('/:id/beers', function(req, res) {
 
 // POST /breweries
 function insertBrewery(brewery) {
-    console.log('made it here with object' + JSON.stringify(brewery));
     return new Promise((resolve, reject) => {
         brewery = validation.extractValidFields(brewery, brewerySchema);
         mysqlPool.query(
-            'INSERT INTO breweries SET ?',
-            brewery,
+            'INSERT INTO breweries SET ?', brewery,
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -206,7 +202,6 @@ router.post('/', function(req, res) {
 
 // PATCH /breweries/{id}
 function patchBrewery(id, brewery) {
-    console.log('made it here with object' + JSON.stringify(brewery));
     return new Promise((resolve, reject) => {
         mysqlPool.query(
             'UPDATE breweries SET ? WHERE id = ?', [brewery, id],
@@ -221,24 +216,27 @@ function patchBrewery(id, brewery) {
     });
 }
 
-router.patch('/:id', function(req, res) {
+router.patch('/:id', function(req, res, next) {
     const breweryid = parseInt(req.params.id);
-    console.log('made it here with object' + JSON.stringify(req.body));
-    if (req.body && validation.validateAgainstSchema(req.body, brewerySchema)) {
-        patchBrewery(breweryid, req.body)
-            .then((id) => {
-                res.status(201).json({
-                    id: breweryid,
-                    links: {
-                        brewery: '/breweries/' + id
-                    }
+    if (req.body) {
+        if (breweryid) {
+            patchBrewery(breweryid, req.body)
+                .then((id) => {
+                    res.status(201).json({
+                        id: breweryid,
+                        links: {
+                            brewery: '/breweries/' + id
+                        }
+                    });
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        error: "Error patching brewery object: " + err
+                    });
                 });
-            })
-            .catch((err) => {
-                res.status(500).json({
-                    error: "Error patching brewery object: " + err
-                });
-            });
+        } else {
+            next();
+        }
     } else {
         res.status(400).json({
             error: "Incorrect JSON body"
@@ -263,13 +261,12 @@ function deleteBrewery(id) {
     });
 }
 
-router.delete('/:id', function(req, res) {
+router.delete('/:id', function(req, res, next) {
     const id = parseInt(req.params.id);
     deleteBrewery(id)
         .then((deleteSuccessful) => {
             if (deleteSuccessful) {
                 res.status(204).end();
-                console.log('Deleted the brewery entry');
             } else {
                 next();
             }

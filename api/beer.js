@@ -71,7 +71,7 @@ router.get('/', function(req, res) {
             } = beerInfo;
             if (pageNumber < totalPages) {
                 links.nextPage = '/beer?page=' + (pageNumber + 1);
-                links.lastPage = 'beer?page=' + totalPages;
+                links.lastPage = '/beer?page=' + totalPages;
             }
             if (pageNumber > 1) {
                 links.prevPage = '/beer?page=' + (pageNumber - 1);
@@ -132,16 +132,17 @@ function getDistributorFromBeerID(beerID) {
     });
 }
 
-router.get('/:beerID', function(req, res) {
+router.get('/:beerID', function(req, res, next) {
     var BeerObj;
     const beerID = parseInt(req.params.beerID);
+
     getBeerByID(beerID)
         .then((beer) => {
             if (beer) {
                 BeerObj = beer;
                 return getBreweryFromBeerID(beerID);
             }
-            return Promise.reject("Beer not found with id " + beerID);
+            next();
         })
         .then((brewery) => {
             if (brewery) {
@@ -167,6 +168,7 @@ router.get('/:beerID', function(req, res) {
 // POST /beers
 function insertBeer(beer) {
     return new Promise((resolve, reject) => {
+        beer = validation.extractValidFields(beer, beerSchema);
         mysqlPool.query(
             'INSERT INTO beer SET ?', [beer],
             function(err, result) {
@@ -213,30 +215,47 @@ function updateBeer(beerID, beer) {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result.insertId);
+                    console.log(result);
+                    if (result && result.affectedRows > 0) {
+                        resolve(result);
+                    } else {
+                        resolve(null);
+                    }
                 }
             }
         );
     });
 }
 
-router.patch('/:beerID', function(req, res) {
+router.patch('/:beerID', function(req, res, next) {
     const beerID = parseInt(req.params.beerID);
-    if (req.body && beerID) {
-        updateBeer(beerID, req.body)
-            .then((id) => {
-                res.status(201).json({
-                    id: id,
-                    links: {
-                        beer: '/beer/' + beerID
+    if (req.body) {
+        if (beerID) {
+            console.log("id:" + beerID);
+            updateBeer(beerID, req.body)
+                .then((result) => {
+                    console.log("ResultId:" + result);
+                    if (result) {
+                        res.status(201).json({
+                            id: beerID,
+                            links: {
+                                beer: '/beer/' + beerID
+                            }
+                        });
+                    } else {
+                        next();
+                        return;
                     }
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        error: "Error patching beer object: " + err
+                    });
                 });
-            })
-            .catch((err) => {
-                res.status(500).json({
-                    error: "Error patching beer object: " + err
-                });
-            });
+        } else {
+            next();
+            return;
+        }
     } else {
         res.status(400).json({
             error: "Incorrect JSON body"
@@ -263,19 +282,24 @@ function deleteBeerByID(beerID) {
 
 router.delete('/:beerID', function(req, res, next) {
     const beerID = parseInt(req.params.beerID);
-    deleteBeerByID(beerID)
-        .then((deleteSuccessful) => {
-            if (deleteSuccessful) {
-                res.status(204).end();
-            } else {
-                next();
-            }
-        })
-        .catch((err) => {
-            res.status(500).json({
-                error: "Cannot delete beer entry: " + err
+
+    if (beerID) {
+        deleteBeerByID(beerID)
+            .then((deleteSuccessful) => {
+                if (deleteSuccessful) {
+                    res.status(204).end();
+                } else {
+                    next();
+                }
+            })
+            .catch((err) => {
+                res.status(500).json({
+                    error: "Cannot delete beer entry: " + err
+                });
             });
-        });
+    } else {
+        next();
+    }
 });
 
 
