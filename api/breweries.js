@@ -26,8 +26,8 @@ const mysqlPool = mysql.createPool({
  */
 const brewerySchema = {
     name: { required: true },
-    locations: { required: true },
     address: { required: false },
+    city: { required: true },
     state: { required: true },
     zip: { required: true },
     phone: { required: true }
@@ -112,7 +112,7 @@ function getBrewery(id) {
     return new Promise((resolve, reject) => {
       mysqlPool.query(
           'SELECT * FROM breweries WHERE id = ?',
-          [beerID],
+          [id],
           function (err, results) {
               if (err) {
                   reject(err);
@@ -187,13 +187,43 @@ router.get('/:id/beers', function(req, res) {
 
 // POST /breweries
 function insertBrewery(brewery) {
-    return new Promise((resolve, reject) => {
-
-    });
+  console.log('made it here with object' + JSON.stringify(brewery));
+  return new Promise((resolve, reject) => {
+      brewery = validation.extractValidFields(brewery, brewerySchema);
+      mysqlPool.query(
+          'INSERT INTO brewery SET ?',
+          brewery,
+          function(err, result) {
+              if(err) {
+                  reject(err);
+              } else {
+                  resolve(result.insertId);
+              }
+          }
+      );
+  });
 }
 router.post('/', function(req, res) {
-
-    res.status(200).send("POST breweries");
+  if(validation.validateAgainstSchema(req.body, brewerySchema)) {
+      insertBeer(req.body)
+      .then((id) => {
+          res.status(201).json({
+              id: id,
+              links: {
+                  brewery: '/breweries/' + id
+              }
+          });
+      })
+      .catch((err) => {
+          res.status(500).json({
+              error: "Error inserting brewery object"
+          });
+      });
+  } else {
+      res.status(400).json({
+          error: "Incorrect JSON body"
+      });
+  }
 });
 
 
