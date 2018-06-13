@@ -565,6 +565,39 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "http://localhost:8000/users/zach/distributors",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8000/users/zach/distributors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"zach",
+						"distributors"
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

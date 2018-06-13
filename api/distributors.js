@@ -368,4 +368,22 @@ router.delete('/:id/beer/', function(req, res, next) {
     }
 });
 
+
+// GET /users/:username/distributors
+function getDistributionsByUserId(username) {
+    return new Promise((resolve, reject) => {
+        mysqlPool.query(
+            'SELECT * FROM distributors WHERE ownerid = ?;', [username],
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            }
+        );
+    });
+}
+
 exports.router = router;
+exports.getDistributionsByUserId = getDistributionsByUserId;

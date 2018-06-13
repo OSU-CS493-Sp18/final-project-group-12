@@ -273,10 +273,13 @@ router.get('/:username/distributors', function(req, res) {
         if (req.tokenPayload.name == req.params.username) {
             getUserByUsername(req.params.username, req.app.locals.mongoDB)
                 .then((user) => {
-                    getDistributionsByUserId(user._id.toHexString(), mysqlPool)
-                        .then((businesses) => {
-                            if (businesses) {
-                                res.status(200).json({ businesses: businesses });
+                    getDistributionsByUserId(user.username, mysqlPool)
+                        .then((distributors) => {
+                            console.log(distributors);
+                            if (distributors) {
+                                res.status(200).json({
+                                    distributors: distributors
+                                });
                             } else {
                                 next();
                             }
