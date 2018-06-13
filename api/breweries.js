@@ -2,7 +2,9 @@ const router = require('express').Router();
 const express = require('express');
 const validation = require('../lib/validation');
 const mysql = require('mysql');
+const bodyParser = require('body-parser');
 const app = express();
+app.use(bodyParser.json());
 
 const mysqlHost = process.env.MYSQL_HOST;
 const mysqlPort = process.env.MYSQL_PORT || '3306';
@@ -32,39 +34,154 @@ const brewerySchema = {
 };
 
 
-// GET /breweries
-function getBreweries() {
-    return new Promise((resolve, reject) => {
-
-    });
+function getBreweriesCount() {
+  return new Promise((resolve, reject) => {
+    mysqlPool.query(
+      'SELECT COUNT(*) AS count FROM breweries',
+      function (err, results) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results[0].count);
+        }
+      }
+    );
+  });
 }
-router.get('/', function(req, res) {
 
-    res.status(200).send("GET breweries");
+
+function getBreweriesPage(page, count) {
+  return new Promise((resolve, reject) => {
+    const numPerPage = 10;
+    const lastPage = Math.ceil(count / numPerPage);
+    page = page < 1 ? 1 : page;
+    page = page > lastPage ? lastPage : page;
+    const offset = (page - 1) * numPerPage;
+    mysqlPool.query(
+      'SELECT * FROM breweries ORDER BY id LIMIT ?,?', [offset, numPerPage],
+      function (err, results) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve({
+            breweries: results,
+            pageNumber: page,
+            totalPages: lastPage,
+            pageSize: numPerPage,
+            totalCount: count
+          });
+        }
+      }
+    );
+  });
+}
+// GET /breweries
+router.get('/', function(req, res) {
+  getBreweriesCount()
+      .then((count) => {
+          return getBreweriesPage(parseInt(req.query.page) || 1, count);
+      })
+      .then((breweriesInfo) => {
+          breweriesInfo.links = {};
+          let {
+              links,
+              totalPages,
+              pageNumber
+          } = breweriesInfo;
+          if (pageNumber < totalPages) {
+              links.nextPage = '/breweries?page=' + (pageNumber+1);
+              links.lastPage = 'breweries?page=' + totalPages;
+          }
+          if (pageNumber > 1) {
+              links.prevPage = '/breweries?page=' + (pageNumber - 1);
+              links.firstPage = '/breweries?page=1';
+          }
+          res.status(200).json(breweriesInfo);
+      })
+      .catch((err) => {
+          res.status(500).json({
+              error: "Error getting breweries list"
+          });
+      });
+
 });
 
 
 // GET /breweries/{id}
 function getBrewery(id) {
     return new Promise((resolve, reject) => {
+      mysqlPool.query(
+          'SELECT * FROM breweries WHERE id = ?',
+          [beerID],
+          function (err, results) {
+              if (err) {
+                  reject(err);
+              } else {
+                  resolve(results[0]);
+              }
+          }
+      )
 
     });
 }
+
 router.get('/:id', function(req, res) {
 
-    res.status(200).send("GET breweries/" + req.params.id);
+    const breweryid = parseInt(req.params.id);
+    getBrewery(breweryid)
+      .then((brewery) => {
+        if(brewery) {
+          res.status(200).json(brewery);
+        } else {
+            next();
+        }
+
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+            error: "Error getting beer info"
+        });
+      });
+
 });
 
 
 // GET /breweries/{id}/beers
-function getBreweryBeers(id) {
-    return new Promise((resolve, reject) => {
 
+
+function getBeerFromBreweryID(breweryID) {
+    return new Promise((resolve, reject) => {
+        mysqlPool.query(
+            'SELECT * FROM beer WHERE brewerid = (SELECT id FROM breweries WHERE brewerid = ?)',
+            [breweryID],
+            function(err, results) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
+                }
+            }
+        )
     });
 }
-router.get('/:id/beers', function(req, res) {
 
-    res.status(200).send("GET breweries/" + req.params.id + "/beers");
+router.get('/:id/beers', function(req, res) {
+  const breweryid = parseInt(req.params.id);
+  getBeerFromBreweryID(breweryid)
+    .then((beer) => {
+      if(beer) {
+        res.status(200).json(beer);
+      } else {
+        next();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+          error: "Error getting brewery info"
+      });
+    });
 });
 
 
