@@ -25,6 +25,7 @@ const mysqlPool = mysql.createPool({
  * Schema describing required/optional fields of a brewery object.
  */
 const brewerySchema = {
+    id: { required: false },
     name: { required: true },
     address: { required: false },
     city: { required: true },
@@ -191,7 +192,7 @@ function insertBrewery(brewery) {
   return new Promise((resolve, reject) => {
       brewery = validation.extractValidFields(brewery, brewerySchema);
       mysqlPool.query(
-          'INSERT INTO brewery SET ?',
+          'INSERT INTO breweries SET ?',
           brewery,
           function(err, result) {
               if(err) {
@@ -205,7 +206,7 @@ function insertBrewery(brewery) {
 }
 router.post('/', function(req, res) {
   if(validation.validateAgainstSchema(req.body, brewerySchema)) {
-      insertBeer(req.body)
+      insertBrewery(req.body)
       .then((id) => {
           res.status(201).json({
               id: id,
@@ -229,25 +230,80 @@ router.post('/', function(req, res) {
 
 // PATCH /breweries/{id}
 function patchBrewery(id, brewery) {
-    return new Promise((resolve, reject) => {
-
-    });
+  console.log('made it here with object' + JSON.stringify(brewery));
+  return new Promise((resolve, reject) => {
+      mysqlPool.query(
+          'UPDATE breweries SET ? WHERE id = ?',
+          [brewery, id],
+          function(err, result) {
+              if(err) {
+                  reject(err);
+              } else {
+                  resolve(result.insertId);
+              }
+          }
+      );
+  });
+  }
 }
 router.patch('/:id', function(req, res) {
-
-    res.status(200).send("PATCH breweries/" + req.params.id);
+  const id = parseInt(req.params.id);
+  console.log('made it here with object' + JSON.stringify(req.body));
+  if(req.body && validation.validateAgainstSchema(req.body, brewerySchema)) {
+      patchBrewery(id, req.body)
+      .then((id) => {
+          res.status(201).json({
+              id: id,
+              links: {
+                  brewery: '/breweries/' + id
+              }
+          });
+      })
+      .catch((err) => {
+          res.status(500).json({
+              error: "Error patching brewery object"
+          });
+      });
+  } else {
+      res.status(400).json({
+          error: "Incorrect JSON body"
+      });
+  }
 });
 
 
 // DELETE /breweries/{id}
 function deleteBrewery(id) {
     return new Promise((resolve, reject) => {
-
+        mysqlPool.query(
+            'DELETE FROM breweries WHERE id = ? ',
+            [id],
+            function (err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.affectedRows > 0);
+                }
+            }
+        );
     });
 }
 router.delete('/:id', function(req, res) {
-
-    res.status(200).send("DELETE breweries/" + req.params.id);
+  const id = parseInt(req.params.id);
+  deleteBeerByID(id)
+      .then((deleteSuccessful) => {
+          if (deleteSuccessful) {
+              res.status(204).end();
+              console.log('Deleted the brewery entry');
+          } else {
+              next();
+          }
+      })
+      .catch((err) => {
+          res.status(500).json({
+              error: "Cannot delete brewery entry "
+          });
+      });
 });
 
 
