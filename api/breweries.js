@@ -246,13 +246,13 @@ function patchBrewery(id, brewery) {
   });
 }
 router.patch('/:id', function(req, res) {
-    const id = parseInt(req.params.id);
+    const breweryid = parseInt(req.params.id);
     console.log('made it here with object' + JSON.stringify(req.body));
     if(req.body && validation.validateAgainstSchema(req.body, brewerySchema)) {
-        patchBrewery(id, req.body)
+        patchBrewery(breweryid, req.body)
         .then((id) => {
             res.status(201).json({
-                id: id,
+                id: breweryid,
                 links: {
                     brewery: '/breweries/' + id
                 }
@@ -289,7 +289,7 @@ function deleteBrewery(id) {
 }
 router.delete('/:id', function(req, res) {
   const id = parseInt(req.params.id);
-  deleteBeerByID(id)
+  deleteBrewery(id)
       .then((deleteSuccessful) => {
           if (deleteSuccessful) {
               res.status(204).end();
