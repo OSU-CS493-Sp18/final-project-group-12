@@ -19,7 +19,7 @@
     },
     "homepage": "https://github.com/OSU-CS493-Sp18/final-project-group-12#readme",
     "dependencies": {
-        "bcrypt": "^2.0.1",
+        "bcrypt": "^5.0.0",
         "body-parser": "^1.18.2",
         "express": "^4.16.3",
         "express-bearer-token": "^2.1.1",
